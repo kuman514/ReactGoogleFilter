@@ -19,7 +19,7 @@ class Strong extends Component<StrongProps, StrongState> {
 
   getContent = (): string[] => {
     return this.state.content.split(',').map((item) => {
-      return `"${item}"`;
+      return `"${item.trim()}"`;
     });
   }
 
