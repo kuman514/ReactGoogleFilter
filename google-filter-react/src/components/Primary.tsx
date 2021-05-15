@@ -20,7 +20,7 @@ class Primary extends Component<PrimaryProps, PrimaryState> {
   getContent = (): string[] => {
     return this.state.content.split(',').map((item) => {
       return item.trim();
-    });;
+    });
   }
 
   public render(): JSX.Element {
