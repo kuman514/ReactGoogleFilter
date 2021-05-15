@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/google-filter-react/node_modules
+/google-filter-react/.pnp
+/google-filter-react/.pnp.js
+
+# testing
+/google-filter-react/coverage
+
+# production
+/google-filter-react/build
+
+# misc
+/google-filter-react/.DS_Store
+/google-filter-react/.env.local
+/google-filter-react/.env.development.local
+/google-filter-react/.env.test.local
+/google-filter-react/.env.production.local
+
+/google-filter-react/npm-debug.log*
+/google-filter-react/yarn-debug.log*
+/google-filter-react/yarn-error.log*
+PLANS
