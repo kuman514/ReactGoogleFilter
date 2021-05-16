@@ -17,8 +17,27 @@ class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
     };
   }
 
+  public getContent(): string {
+    if (this.state.active) {
+      return '&safe=active';
+    } else {
+      return '';
+    }
+  }
+
   render(): JSX.Element {
-    return (<div></div>);
+    return (
+      <div>
+        <input type="checkbox" name="safesearch" id="safesearch" checked={this.state.active} onChange={(e) => {
+          e.preventDefault();
+          console.log(e.target.checked);
+          this.setState({
+            active: e.target.checked
+          });
+        }}/>
+        <label>세이프서치 활성화</label>
+      </div>
+    );
   }
 }
 
