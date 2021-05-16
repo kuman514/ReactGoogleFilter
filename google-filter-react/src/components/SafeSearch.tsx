@@ -17,7 +17,7 @@ class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
     };
   }
 
-  public getContent(): string {
+  getContent = (): string => {
     if (this.state.active) {
       return '&safe=active';
     } else {
@@ -28,9 +28,7 @@ class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
   render(): JSX.Element {
     return (
       <div>
-        <input type="checkbox" name="safesearch" id="safesearch" checked={this.state.active} onChange={(e) => {
-          e.preventDefault();
-          console.log(e.target.checked);
+        <input type="checkbox" name="safesearch" id="safesearch" onChange={(e) => {
           this.setState({
             active: e.target.checked
           });
