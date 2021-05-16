@@ -19,8 +19,8 @@ class ExceptSite extends Component<ExceptSiteProps, ExceptSiteState> {
 
   getContent = (): string[] => {
     return this.state.content.split(',').map((item) => {
-      return `-site:${item.trim()}`;
-    });
+      return item.trim();
+    }).filter((item) => item !== '');
   }
 
   public render(): JSX.Element {
