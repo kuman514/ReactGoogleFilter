@@ -26,13 +26,15 @@ function App() {
         }
         // get strong content
         let finalStrong: string = '';
-        for (const item of str.getContent()) {
-          finalStrong += `${item} `;
+        const strContent: string[] = str.getContent();
+        for (const item of strContent) {
+          finalStrong += `"${item}" `;
         }
         // get except site content
         let finalExcSite: string = '';
-        for (const item of ecs.getContent()) {
-          finalExcSite += `${item} `;
+        const ecsContent: string[] = ecs.getContent();
+        for (const item of ecsContent) {
+          finalExcSite += `-site:${item} `;
         }
         // get safe search content
         let finalSafeSearch: string = sfs.getContent();
