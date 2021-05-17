@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-header {
@@ -11,4 +16,37 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.Logo {
+  font-size: calc(20px + 2vmin);
+  font-weight: bold;
+}
+
+.Red {
+  color: #EA4335;
+}
+
+.Blue {
+  color: #4285F4;
+}
+
+.Yellow {
+  color: #FBBC05;
+}
+
+.Green {
+  color: #34A853;
+}
+
+h2 {
+  margin: 10px;
+}
+
+div {
+  margin: 10px;
+}
+
+button {
+  margin: 5px;
 }
