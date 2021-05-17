@@ -3,7 +3,8 @@ import './App.css';
 import Primary from './components/Primary';
 import Strong from './components/Strong';
 import ExceptSite from './components/ExceptSite';
-import SafeSearch from './components/SafeSearch'
+import SafeSearch from './components/SafeSearch';
+import Logo from './components/Logo';
 
 function App() {
   let pri: Primary;
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <div className="App">
+      <Logo></Logo>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
       <Strong ref={(strongComponent) => {str = strongComponent as Strong}}></Strong>
       <ExceptSite ref={(exceptSiteComponent) => {ecs = exceptSiteComponent as ExceptSite}}></ExceptSite>
