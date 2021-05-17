@@ -5,6 +5,7 @@ import Strong from './components/Strong';
 import ExceptSite from './components/ExceptSite';
 import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
+import Manual from './components/Manual';
 
 function App() {
   let pri: Primary;
@@ -42,6 +43,7 @@ function App() {
         let finalSafeSearch: string = sfs.getContent();
         window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}`, '_blank');
       }}>검색하기</button>
+      <Manual></Manual>
     </div>
   );
 }
