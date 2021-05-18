@@ -13,8 +13,36 @@ function App() {
   let ecs: ExceptSite;
   let sfs: SafeSearch;
 
+  const onSearch = (): void => {
+    // get primary content
+    let finalPrimary: string = '';
+    for (const item of pri.getContent()) {
+      finalPrimary += `${item} `;
+    }
+    // get strong content
+    let finalStrong: string = '';
+    const strContent: string[] = str.getContent();
+    for (const item of strContent) {
+      finalStrong += `"${item}" `;
+    }
+    // get except site content
+    let finalExcSite: string = '';
+    const ecsContent: string[] = ecs.getContent();
+    for (const item of ecsContent) {
+      finalExcSite += `-site:${item} `;
+    }
+    // get safe search content
+    let finalSafeSearch: string = sfs.getContent();
+    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}`, '_blank');
+  };
+
   return (
-    <div className="App">
+    <div className="App" onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        onSearch();
+      }
+    }}>
       <Logo></Logo>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
       <Strong ref={(strongComponent) => {str = strongComponent as Strong}}></Strong>
@@ -22,26 +50,7 @@ function App() {
       <SafeSearch ref={(safeSearchComponent) => {sfs = safeSearchComponent as SafeSearch}}></SafeSearch>
       <button onClick={(e) => {
         e.preventDefault();
-        // get primary content
-        let finalPrimary: string = '';
-        for (const item of pri.getContent()) {
-          finalPrimary += `${item} `;
-        }
-        // get strong content
-        let finalStrong: string = '';
-        const strContent: string[] = str.getContent();
-        for (const item of strContent) {
-          finalStrong += `"${item}" `;
-        }
-        // get except site content
-        let finalExcSite: string = '';
-        const ecsContent: string[] = ecs.getContent();
-        for (const item of ecsContent) {
-          finalExcSite += `-site:${item} `;
-        }
-        // get safe search content
-        let finalSafeSearch: string = sfs.getContent();
-        window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}`, '_blank');
+        onSearch();
       }}>검색하기</button>
       <Manual></Manual>
     </div>
