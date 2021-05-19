@@ -6,12 +6,14 @@ import ExceptSite from './components/ExceptSite';
 import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
 import Manual from './components/Manual';
+import Range from './components/Range';
 
 function App() {
   let pri: Primary;
   let str: Strong;
   let ecs: ExceptSite;
   let sfs: SafeSearch;
+  let rng: Range;
 
   const onSearch = (): void => {
     // get primary content
@@ -33,7 +35,9 @@ function App() {
     }
     // get safe search content
     let finalSafeSearch: string = sfs.getContent();
-    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}`, '_blank');
+    // get range content
+    let finalRange: string = rng.getContent();
+    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}`, '_blank');
   };
 
   return (
@@ -48,6 +52,7 @@ function App() {
       <Strong ref={(strongComponent) => {str = strongComponent as Strong}}></Strong>
       <ExceptSite ref={(exceptSiteComponent) => {ecs = exceptSiteComponent as ExceptSite}}></ExceptSite>
       <SafeSearch ref={(safeSearchComponent) => {sfs = safeSearchComponent as SafeSearch}}></SafeSearch>
+      <Range ref={(rangeComponent) => {rng = rangeComponent as Range}}></Range>
       <button onClick={(e) => {
         e.preventDefault();
         onSearch();
