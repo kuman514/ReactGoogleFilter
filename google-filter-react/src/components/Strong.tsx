@@ -6,7 +6,7 @@ interface StrongProps {
 }
 
 interface StrongState {
-  content: string;
+  content: string
 }
 
 class Strong extends Component<StrongProps, StrongState> {
@@ -25,7 +25,7 @@ class Strong extends Component<StrongProps, StrongState> {
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className="Strong">
         <h2>강조 검색어</h2>
         <input type="text" name="strong" id="strong" onChange={(e) => {
           e.preventDefault();

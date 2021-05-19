@@ -6,7 +6,7 @@ interface ExceptSiteProps {
 }
 
 interface ExceptSiteState {
-  content: string;
+  content: string
 }
 
 class ExceptSite extends Component<ExceptSiteProps, ExceptSiteState> {
@@ -25,7 +25,7 @@ class ExceptSite extends Component<ExceptSiteProps, ExceptSiteState> {
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className="ExceptSite">
         <h2>제외할 사이트</h2>
         <input type="text" name="except-site" id="except-site" onChange={(e) => {
           e.preventDefault();

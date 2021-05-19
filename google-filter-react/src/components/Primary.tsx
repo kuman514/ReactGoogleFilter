@@ -6,7 +6,7 @@ interface PrimaryProps {
 }
 
 interface PrimaryState {
-  content: string;
+  content: string
 }
 
 class Primary extends Component<PrimaryProps, PrimaryState> {
@@ -25,7 +25,7 @@ class Primary extends Component<PrimaryProps, PrimaryState> {
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className="Primary">
         <h2>주요 검색어</h2>
         <input type="text" name="primary" id="primary" onChange={(e) => {
           e.preventDefault();

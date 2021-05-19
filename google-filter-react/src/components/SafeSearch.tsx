@@ -6,7 +6,7 @@ interface SafeSearchProps {
 }
 
 interface SafeSearchState {
-  active: boolean;
+  active: boolean
 }
 
 class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
@@ -27,7 +27,7 @@ class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
 
   render(): JSX.Element {
     return (
-      <div>
+      <div className="SafeSearch">
         <input type="checkbox" name="safesearch" id="safesearch" onChange={(e) => {
           this.setState({
             active: e.target.checked
