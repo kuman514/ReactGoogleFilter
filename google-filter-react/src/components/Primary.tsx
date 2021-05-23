@@ -26,7 +26,10 @@ class Primary extends Component<PrimaryProps, PrimaryState> {
   public render(): JSX.Element {
     return (
       <div className="Primary">
-        <h2>주요 검색어</h2>
+        <div>
+          <h2>검색어</h2>
+          <label>콤마(,)로 구분 </label>
+        </div>
         <input type="text" name="primary" id="primary" onChange={(e) => {
           e.preventDefault();
           this.setState({

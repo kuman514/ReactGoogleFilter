@@ -26,7 +26,10 @@ class Strong extends Component<StrongProps, StrongState> {
   public render(): JSX.Element {
     return (
       <div className="Strong">
-        <h2>강조 검색어</h2>
+        <div>
+          <h2>강조 검색어</h2>
+          <label>콤마(,)로 구분 </label>
+        </div>
         <input type="text" name="strong" id="strong" onChange={(e) => {
           e.preventDefault();
           this.setState({

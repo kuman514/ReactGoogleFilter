@@ -33,7 +33,7 @@ class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
             active: e.target.checked
           });
         }}/>
-        <label>세이프서치 활성화</label>
+        <h2>세이프서치 활성화</h2>
       </div>
     );
   }

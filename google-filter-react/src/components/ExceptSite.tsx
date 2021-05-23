@@ -26,7 +26,10 @@ class ExceptSite extends Component<ExceptSiteProps, ExceptSiteState> {
   public render(): JSX.Element {
     return (
       <div className="ExceptSite">
-        <h2>제외할 사이트</h2>
+        <div>
+          <h2>제외할 사이트</h2>
+          <label>도메인 네임 형태로 입력 / 콤마(,)로 구분 </label>
+        </div>
         <input type="text" name="except-site" id="except-site" onChange={(e) => {
           e.preventDefault();
           this.setState({
