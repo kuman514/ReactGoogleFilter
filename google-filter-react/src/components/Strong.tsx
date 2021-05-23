@@ -27,7 +27,7 @@ class Strong extends Component<StrongProps, StrongState> {
     return (
       <div className="Strong">
         <div>
-          <h2>강조 검색어</h2>
+          <h2>정확히 포함시킬 검색어</h2>
           <label>콤마(,)로 구분 </label>
         </div>
         <input type="text" name="strong" id="strong" onChange={(e) => {
