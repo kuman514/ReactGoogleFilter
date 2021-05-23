@@ -40,11 +40,14 @@
 }
 
 h2 {
+  display: inline;
   margin: 10px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 div {
-  margin: 10px;
+  margin: 8px;
 }
 
 button {
