@@ -5,7 +5,6 @@ import Strong from './components/Strong';
 import ExceptSite from './components/ExceptSite';
 import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
-import Manual from './components/Manual';
 import Range from './components/Range';
 
 function App() {
@@ -57,7 +56,6 @@ function App() {
         e.preventDefault();
         onSearch();
       }}>검색하기</button>
-      <Manual></Manual>
     </div>
   );
 }
