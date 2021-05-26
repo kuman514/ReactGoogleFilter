@@ -14,10 +14,51 @@ interface RangeState {
 class Range extends Component<RangeProps, RangeState> {
   constructor(props: RangeProps) {
     super(props);
+    const today: string[] = Date().split(' ');
+    let month = '';
+    switch (today[1]) {
+      case 'Jan':
+        month = '01';
+        break;
+      case 'Feb':
+        month = '02';
+        break;
+      case 'Mar':
+        month = '03';
+        break;
+      case 'Apr':
+        month = '04';
+        break;
+      case 'May':
+        month = '05';
+        break;
+      case 'Jun':
+        month = '06';
+        break;
+      case 'Jul':
+        month = '07';
+        break;
+      case 'Aug':
+        month = '08';
+        break;
+      case 'Sep':
+        month = '09';
+        break;
+      case 'Oct':
+        month = '10';
+        break;
+      case 'Nov':
+        month = '11';
+        break;
+      case 'Dec':
+        month = '12';
+        break;
+    }
+    const todayForm: string = `${today[3]}-${month}-${today[2]}`;
     this.state = {
       type: 0,
-      startDate: Date(),
-      endDate: Date()
+      startDate: todayForm,
+      endDate: todayForm
     }
   }
   
@@ -60,6 +101,16 @@ class Range extends Component<RangeProps, RangeState> {
           <label>~1개월</label>
           <input type="radio" name="SelectedRange" id="RangeYear" value="5"/>
           <label>~1년</label>
+          <input type="radio" name="SelectedRange" id="RangeSet" value="6"/>
+          <label>직접 설정</label>
+        </div>
+        <div hidden={this.state.type !== 6} className="RangeDate" onChange={(e) => {
+          console.log((e.target as HTMLInputElement).value);
+        }}>
+          <input type="date" name="SelectedRangeDate" id="StartFrom" />
+          <label> 부터  </label>
+          <input type="date" name="SelectedRangeDate" id="EndTo" />
+          <label> 까지</label>
         </div>
       </div>
     );
