@@ -28,9 +28,8 @@ class Primary extends Component<PrimaryProps, PrimaryState> {
       <div className="Primary">
         <div>
           <h2>검색어</h2>
-          <label>콤마(,)로 구분 </label>
         </div>
-        <input type="text" name="primary" id="primary" onChange={(e) => {
+        <input type="text" name="primary" id="primary" placeholder="콤마(,)로 구분하여 여러개 입력 가능." onChange={(e) => {
           e.preventDefault();
           this.setState({
             content: e.target.value

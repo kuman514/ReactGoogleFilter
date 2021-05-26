@@ -28,9 +28,8 @@ class ExceptSite extends Component<ExceptSiteProps, ExceptSiteState> {
       <div className="ExceptSite">
         <div>
           <h2>제외할 사이트</h2>
-          <label>도메인 네임 형태로 입력 / 콤마(,)로 구분 </label>
         </div>
-        <input type="text" name="except-site" id="except-site" onChange={(e) => {
+        <input type="text" name="except-site" id="except-site" placeholder="도메인 네임 형태(예: namu.wiki)로 입력. 콤마(,)로 구분하여 여러개 입력 가능." onChange={(e) => {
           e.preventDefault();
           this.setState({
             content: e.target.value
