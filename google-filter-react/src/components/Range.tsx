@@ -76,6 +76,10 @@ class Range extends Component<RangeProps, RangeState> {
         return '&tbs=qdr:m';
       case 5:
         return '&tbs=qdr:y';
+      case 6:
+        const startFrom = this.state.startDate.split('-');
+        const endTo = this.state.endDate.split('-');
+        return `&tbs=cdr:1,cd_min:${startFrom[1]}/${startFrom[2]}/${startFrom[0]},cd_max:${endTo[1]}/${endTo[2]}/${endTo[0]}`;
     }
     return '';
   }
@@ -89,7 +93,7 @@ class Range extends Component<RangeProps, RangeState> {
             type: Number((e.target as HTMLInputElement).value)
           });
         }}>
-          <input type="radio" name="SelectedRange" id="RangeAllDate" value="0"/>
+          <input type="radio" name="SelectedRange" id="RangeAllDate" value="0" defaultChecked/>
           <label>모든 기간</label>
           <input type="radio" name="SelectedRange" id="RangeHour" value="1"/>
           <label>~1시간</label>
@@ -106,7 +110,6 @@ class Range extends Component<RangeProps, RangeState> {
         </div>
         <div hidden={this.state.type !== 6} className="RangeDate" onChange={(e) => {
           const target: HTMLInputElement = e.target as HTMLInputElement;
-          console.log(target.id, target.value);
           switch (target.id) {
             case 'StartFrom':
               this.setState({
@@ -120,9 +123,9 @@ class Range extends Component<RangeProps, RangeState> {
               break;
           }
         }}>
-          <input type="date" name="SelectedRangeDate" id="StartFrom" max={this.state.endDate}/>
+          <input type="date" name="SelectedRangeDate" id="StartFrom" defaultValue={this.state.startDate} max={this.state.endDate}/>
           <label> 부터  </label>
-          <input type="date" name="SelectedRangeDate" id="EndTo" min={this.state.startDate}/>
+          <input type="date" name="SelectedRangeDate" id="EndTo" defaultValue={this.state.endDate} min={this.state.startDate}/>
           <label> 까지</label>
         </div>
       </div>
