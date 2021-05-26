@@ -105,11 +105,24 @@ class Range extends Component<RangeProps, RangeState> {
           <label>직접 설정</label>
         </div>
         <div hidden={this.state.type !== 6} className="RangeDate" onChange={(e) => {
-          console.log((e.target as HTMLInputElement).value);
+          const target: HTMLInputElement = e.target as HTMLInputElement;
+          console.log(target.id, target.value);
+          switch (target.id) {
+            case 'StartFrom':
+              this.setState({
+                startDate: target.value
+              });
+              break;
+            case 'EndTo':
+              this.setState({
+                endDate: target.value
+              });
+              break;
+          }
         }}>
-          <input type="date" name="SelectedRangeDate" id="StartFrom" />
+          <input type="date" name="SelectedRangeDate" id="StartFrom" max={this.state.endDate}/>
           <label> 부터  </label>
-          <input type="date" name="SelectedRangeDate" id="EndTo" />
+          <input type="date" name="SelectedRangeDate" id="EndTo" min={this.state.startDate}/>
           <label> 까지</label>
         </div>
       </div>
