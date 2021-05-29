@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Category from './components/Category'
 import Primary from './components/Primary';
 import Strong from './components/Strong';
 import ExceptSite from './components/ExceptSite';
@@ -8,6 +9,7 @@ import Logo from './components/Logo';
 import Range from './components/Range';
 
 function App() {
+  let cat: Category;
   let pri: Primary;
   let str: Strong;
   let ecs: ExceptSite;
@@ -36,7 +38,9 @@ function App() {
     let finalSafeSearch: string = sfs.getContent();
     // get range content
     let finalRange: string = rng.getContent();
-    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}`, '_blank');
+    // get category
+    let finalCategory: string = cat.getContent();
+    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`, '_blank');
   };
 
   return (
@@ -47,6 +51,7 @@ function App() {
       }
     }}>
       <Logo></Logo>
+      <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
       <Strong ref={(strongComponent) => {str = strongComponent as Strong}}></Strong>
       <ExceptSite ref={(exceptSiteComponent) => {ecs = exceptSiteComponent as ExceptSite}}></ExceptSite>

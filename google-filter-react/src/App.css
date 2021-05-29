@@ -82,3 +82,11 @@ button:hover {
   background-color: rgb(206, 218, 228);
   cursor: pointer;
 }
+
+.Category {
+  margin-bottom: 3px;
+}
+
+.Primary {
+  margin-top: 3px;
+}
