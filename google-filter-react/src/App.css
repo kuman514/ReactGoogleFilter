@@ -1,3 +1,18 @@
+:root[color-theme='light'] {
+  --background: white;
+  --fontColor: black;
+}
+
+:root[color-theme='dark'] {
+  --background: black;
+  --fontColor: white;
+}
+
+* {
+  background-color: var(--background);
+  color: var(--fontColor);
+}
+
 .App {
   text-align: center;
   min-height: 100vh;
@@ -21,6 +36,7 @@
 .Logo {
   font-size: calc(20px + 2vmin);
   font-weight: bold;
+  color: black;
 }
 
 .Red {
@@ -74,6 +90,7 @@ button {
   padding-left: 15px;
   padding-right: 15px;
   background-color: rgb(145, 204, 255);
+  color: black;
   border-radius: 15px;
   transition: 0.1s linear;
 }

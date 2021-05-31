@@ -7,6 +7,7 @@ import ExceptSite from './components/ExceptSite';
 import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
 import Range from './components/Range';
+import ThemeChanger from './components/ThemeChanger';
 
 function App() {
   let cat: Category;
@@ -43,6 +44,15 @@ function App() {
     window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`, '_blank');
   };
 
+  // Initialize theme based on OS preference
+  const userPrefersDark: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const userPrefersLight : boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  if (userPrefersDark){
+    document.documentElement.setAttribute('color-theme', 'dark');
+  } else if (userPrefersLight) {
+    document.documentElement.setAttribute('color-theme', 'light');
+  }
+
   return (
     <div className="App" onKeyDown={(e) => {
       if (e.key === 'Enter') {
@@ -61,6 +71,7 @@ function App() {
         e.preventDefault();
         onSearch();
       }}>검색하기</button>
+      <ThemeChanger></ThemeChanger>
     </div>
   );
 }
