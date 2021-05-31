@@ -4,8 +4,7 @@ function ThemeChanger(): JSX.Element {
   return (
     <div className="ThemeChanger">
       <button onClick={() => {
-        const curTheme: string | null = document.documentElement.getAttribute('color-theme')
-        console.log(curTheme);
+        const curTheme: string | null = document.documentElement.getAttribute('color-theme');
         switch (curTheme) {
           case 'dark':
             document.documentElement.setAttribute('color-theme', 'light');
