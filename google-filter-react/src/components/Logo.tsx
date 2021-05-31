@@ -9,7 +9,7 @@ function Logo(): JSX.Element {
       <span className="Blue">g</span>
       <span className="Green">l</span>
       <span className="Red">e</span>
-      QuickFilter
+      <span>QuickFilter</span>
     </div>
   );
 }
