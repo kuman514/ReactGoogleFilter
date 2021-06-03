@@ -8,6 +8,7 @@ import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
 import Range from './components/Range';
 import ThemeChanger from './components/ThemeChanger';
+import Overlay from './components/Overlay';
 
 function App() {
   let cat: Category;
@@ -60,6 +61,7 @@ function App() {
         onSearch();
       }
     }}>
+      <Overlay></Overlay>
       <Logo></Logo>
       <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
