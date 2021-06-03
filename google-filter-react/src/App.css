@@ -139,10 +139,10 @@ button:hover {
   background-color: transparent;
 }
 
-.OverlayUpper {
+.OverlayUpper, .OverlayUnder {
   background-color: yellowgreen;
 }
 
-.OverlayUnder {
-  background-color: yellowgreen;
+.OverlayUpper > *, .OverlayUnder > * {
+  pointer-events: visible;
 }
