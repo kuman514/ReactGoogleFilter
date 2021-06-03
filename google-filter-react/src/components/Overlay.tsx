@@ -1,5 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
+import OverlayUpper from './OverlayUpper';
+import OverlayUnder from './OverlayUnder';
 
 interface OverlayProps {
 
@@ -18,6 +20,11 @@ class Overlay extends Component<OverlayProps, OverlayState> {
   public render(): JSX.Element {
     return (
       <div className="Overlay">
+        <div className="OverlayContent">
+          <OverlayUpper></OverlayUpper>
+          <div className="NullSpace"></div>
+          <OverlayUnder></OverlayUnder>
+        </div>
       </div>
     );
   }

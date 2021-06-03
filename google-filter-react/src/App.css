@@ -15,7 +15,7 @@
 
 .App {
   text-align: center;
-  min-height: 100vh;
+  min-height: 98vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +24,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 98vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -109,7 +109,7 @@ button:hover {
 }
 
 .Overlay {
-  background-color: unset;
+  background-color: transparent;
   position: fixed;
   height: 100%;
   width: 100%;
@@ -118,4 +118,31 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  pointer-events: none;
+}
+
+.OverlayContent {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 100px 1fr 100px;
+}
+
+.OverlayContent > * {
+  margin: 0;
+}
+
+.NullSpace {
+  background-color: transparent;
+}
+
+.OverlayUpper {
+  background-color: yellowgreen;
+}
+
+.OverlayUnder {
+  background-color: yellowgreen;
 }
