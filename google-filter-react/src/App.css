@@ -136,7 +136,7 @@ button:hover {
   background-color: transparent;
   margin: 0;
   display: grid;
-  grid-template-rows: 100px 1fr var(--under-overlay-height);
+  grid-template-rows: 70px 1fr var(--under-overlay-height);
 }
 
 .OverlayContent > * {
@@ -157,4 +157,15 @@ button:hover {
 
 .OverlayUpper > button {
   margin: 5px;
+}
+
+.OverlayTitle {
+  margin: 5px;
+  background-color: inherit;
+  color: black;
+}
+
+.RecentQueries {
+  background-color: inherit;
+  text-align: left;
 }
