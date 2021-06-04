@@ -2,27 +2,21 @@ import React from 'react';
 import { Component } from 'react';
 
 interface OverlayUnderProps {
-
+  recentQueries: string[]
 }
 
 interface OverlayUnderState {
-  recentQueries: string[]
 }
 
 class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
   constructor(props: OverlayUnderProps) {
     super(props);
     this.state = {
-      recentQueries: [
-        'koishi',
-        'nitori',
-        'john cena'
-      ]
     };
   }
 
   private convertContent(): JSX.Element {
-    if (this.state.recentQueries.length === 0) {
+    if (this.props.recentQueries.length === 0) {
       return (
         <div>
           <span>최근 기록이 없습니다. 로그인 후 이용하실 수 있습니다.</span>
@@ -31,11 +25,11 @@ class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
     }
 
     const finalContent: JSX.Element[] = [];
-    for (const index in this.state.recentQueries) {
+    for (const index in this.props.recentQueries) {
       finalContent.push(
         <li key={`recent-${index}`}>
-          <a href={`https://www.google.com/search?q=${this.state.recentQueries[index]}`} target="_blank" rel="noreferrer">
-            {this.state.recentQueries[index]}
+          <a href={`https://www.google.com/search?q=${this.props.recentQueries[index]}`} target="_blank" rel="noreferrer">
+            {this.props.recentQueries[index]}
           </a>
         </li>
       );

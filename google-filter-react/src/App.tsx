@@ -11,6 +11,7 @@ import ThemeChanger from './components/ThemeChanger';
 import Overlay from './components/Overlay';
 
 function App() {
+  let ovl: Overlay;
   let cat: Category;
   let pri: Primary;
   let str: Strong;
@@ -42,7 +43,10 @@ function App() {
     let finalRange: string = rng.getContent();
     // get category
     let finalCategory: string = cat.getContent();
-    window.open(`https://www.google.com/search?q=${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`, '_blank');
+
+    const finalQuery: string = `${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`;
+    ovl.pushRecent(finalQuery);
+    window.open(`https://www.google.com/search?q=${finalQuery}`, '_blank');
   };
 
   // Initialize theme based on OS preference
@@ -61,7 +65,7 @@ function App() {
         onSearch();
       }
     }}>
-      <Overlay></Overlay>
+      <Overlay ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}></Overlay>
       <Logo></Logo>
       <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
