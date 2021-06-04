@@ -8,6 +8,14 @@
   --fontColor: white;
 }
 
+:root[under-overlay-fold='fold'] {
+  --under-overlay-height: 0;
+}
+
+:root[under-overlay-fold='unfold'] {
+  --under-overlay-height: 400px;
+}
+
 * {
   background-color: var(--background);
   color: var(--fontColor);
@@ -128,7 +136,7 @@ button:hover {
   background-color: transparent;
   margin: 0;
   display: grid;
-  grid-template-rows: 100px 1fr 100px;
+  grid-template-rows: 100px 1fr var(--under-overlay-height);
 }
 
 .OverlayContent > * {
@@ -145,4 +153,8 @@ button:hover {
 
 .OverlayUpper > *, .OverlayUnder > * {
   pointer-events: visible;
+}
+
+.OverlayUpper > button {
+  margin: 5px;
 }

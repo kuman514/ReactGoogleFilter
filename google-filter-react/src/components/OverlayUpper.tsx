@@ -6,23 +6,33 @@ interface OverlayUpperProps {
 }
 
 interface OverlayUpperState {
-  fold: boolean
+  underfold: boolean
 }
 
 class OverlayUpper extends Component<OverlayUpperProps, OverlayUpperState> {
   constructor(props: OverlayUpperProps) {
     super(props);
     this.state = {
-      fold: false
+      underfold: true
     };
   }
 
   public render(): JSX.Element {
+    let underfoldAttr: string = 'unfold';
+    if (this.state.underfold) {
+      underfoldAttr = 'fold';
+    }
+    document.documentElement.setAttribute('under-overlay-fold', underfoldAttr);
+
     return (
       <div className="OverlayUpper">
         <div></div>
-        <button>TestButton</button>
-        <button>TestButton</button>
+        <button>로그인</button>
+        <button onClick={() => {
+          this.setState({
+            underfold: !(this.state.underfold)
+          });
+        }}>최근 검색어</button>
       </div>
     );
   }
