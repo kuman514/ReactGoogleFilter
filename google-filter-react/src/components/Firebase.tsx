@@ -9,5 +9,5 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const firebaseAuth = firebase.auth;
 export const firebaseAppAuth = firebase.auth();
 export const firebaseAppGoogleLogin = new firebaseAuth.GoogleAuthProvider();
-export const firebaseAppDBRef =  firebase.database().ref();
+export const firebaseAppDBRef =  firebase.database();
 export default firebaseApp;

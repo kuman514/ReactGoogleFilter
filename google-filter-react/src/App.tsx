@@ -21,8 +21,8 @@ function App() {
   let sfs: SafeSearch;
   let rng: Range;
 
-  let credential: any = null;
-  let token: any = null;
+  //let credential: any = null;
+  //let token: any = null;
   let user: any = null;
 
   const onSearch = (): void => {
@@ -83,12 +83,11 @@ function App() {
           console.log('Logging in...');
           Firebase.firebaseAppAuth.signInWithPopup(Firebase.firebaseAppGoogleLogin).then((result) => {
             /** @type {firebase.auth.OAuthCredential} */
-            credential = result.credential;
+            //credential = result.credential;
             // This gives you a Google Access Token. You can use it to access the Google API.
-            token = credential.accessToken;
+            //token = credential.accessToken;
             // The signed-in user info.
             user = result.user;
-            console.log(credential, token, user);
             ovl.changeUserState(user);
           }).catch((error) => {
             // An error happened.

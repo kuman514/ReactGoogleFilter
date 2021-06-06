@@ -20,7 +20,11 @@ class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
     if (this.props.recentQueries.length === 0) {
       return (
         <div>
-          <span>최근 기록이 없습니다. 로그인 후 이용하실 수 있습니다.</span>
+          {
+            this.props.user
+            ? <span>최근 기록이 없습니다.</span>
+            : <span>로그인 후 이용하실 수 있습니다.</span>
+          }
         </div>
       );
     }

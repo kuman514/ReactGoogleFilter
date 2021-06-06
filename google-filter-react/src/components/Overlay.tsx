@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import OverlayUpper from './OverlayUpper';
 import OverlayUnder from './OverlayUnder';
+import * as Firebase from './Firebase';
 
 interface OverlayProps {
   onLogin?: Function,
@@ -21,10 +22,20 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     };
   }
 
-  public initializeRecent(...queries: string[]): void {
-    this.setState({
-      recentQueries: queries
-    });
+  private refreshRecent(): void {
+    if (this.state.user) {
+      Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).get().then((snapshot) => {
+        if (snapshot.exists()) {
+          this.setState({
+            recentQueries: snapshot.val()
+          });
+        }
+      });
+    } else {
+      this.setState({
+        recentQueries: []
+      });
+    }
   }
 
   public pushRecent(query: string): void {
@@ -37,6 +48,8 @@ class Overlay extends Component<OverlayProps, OverlayState> {
       newRecent.pop();
     }
     newRecent.splice(0, 0, query);
+
+    Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).set(newRecent);
     this.setState({
       recentQueries: newRecent
     });
@@ -46,6 +59,7 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     this.setState({
       user: user
     });
+    this.refreshRecent();
   }
 
   public render(): JSX.Element {
