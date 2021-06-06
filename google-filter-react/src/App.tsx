@@ -31,6 +31,11 @@ function App() {
     for (const item of strContent) {
       finalStrong += `"${item}" `;
     }
+    const finalSearchQuery: string = `${finalPrimary}${finalStrong}`;
+    if (finalSearchQuery === '') {
+      return;
+    }
+
     // get except site content
     let finalExcSite: string = '';
     const ecsContent: string[] = ecs.getContent();
@@ -43,8 +48,9 @@ function App() {
     let finalRange: string = rng.getContent();
     // get category
     let finalCategory: string = cat.getContent();
+    const finalParameters: string = `${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`;
 
-    const finalQuery: string = `${finalPrimary}${finalStrong}${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`;
+    const finalQuery: string = `${finalSearchQuery}${finalParameters}`;
     ovl.pushRecent(finalQuery);
     window.open(`https://www.google.com/search?q=${finalQuery}`, '_blank');
   };
