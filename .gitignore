@@ -11,6 +11,9 @@
 # production
 /google-filter-react/build
 
+# configs
+/google-filter-react/src/components/FirebaseConfig.tsx
+
 # misc
 /google-filter-react/.DS_Store
 /google-filter-react/.env.local
