@@ -21,9 +21,14 @@ function App() {
   let sfs: SafeSearch;
   let rng: Range;
 
-  //let credential: any = null;
-  //let token: any = null;
-  let user: any = null;
+  Firebase.firebaseAppAuth.getRedirectResult().then((result) => {
+    var user = result.user;
+    if (ovl) {
+      ovl.changeUserState(user);
+    }
+  }).catch((error) => {
+    console.log('Error in getting auth');
+  });
 
   const onSearch = (): void => {
     // get primary content
@@ -81,17 +86,7 @@ function App() {
         ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}
         onLogin={() => {
           console.log('Logging in...');
-          Firebase.firebaseAppAuth.signInWithPopup(Firebase.firebaseAppGoogleLogin).then((result) => {
-            /** @type {firebase.auth.OAuthCredential} */
-            //credential = result.credential;
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            //token = credential.accessToken;
-            // The signed-in user info.
-            user = result.user;
-            ovl.changeUserState(user);
-          }).catch((error) => {
-            // An error happened.
-          });
+          Firebase.firebaseAppAuth.signInWithRedirect(Firebase.firebaseAppGoogleLogin);
         }}
         onLogout={() => {
           console.log('Logging out...');
@@ -100,11 +95,10 @@ function App() {
             console.log('Logout successful');
             ovl.changeUserState(null);
           }).catch((error) => {
-            // An error happened.
+            console.log('Error in logging out');
           });
         }}
-      >       
-      </Overlay>
+      ></Overlay>
       <Logo></Logo>
       <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
