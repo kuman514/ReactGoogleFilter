@@ -2,14 +2,15 @@ import React from 'react';
 import { Component } from 'react';
 import OverlayUpper from './OverlayUpper';
 import OverlayUnder from './OverlayUnder';
-import './Firebase';
 
 interface OverlayProps {
-
+  onLogin?: Function,
+  onLogout?: Function
 }
 
 interface OverlayState {
-  recentQueries: string[]
+  recentQueries: string[],
+  user?: any
 }
 
 class Overlay extends Component<OverlayProps, OverlayState> {
@@ -20,7 +21,17 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     };
   }
 
+  public initializeRecent(...queries: string[]): void {
+    this.setState({
+      recentQueries: queries
+    });
+  }
+
   public pushRecent(query: string): void {
+    if (!this.state.user) {
+      return;
+    }
+    
     const newRecent: string[] = Array.from(this.state.recentQueries);
     if (newRecent.length >= 10) {
       newRecent.pop();
@@ -31,13 +42,26 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     });
   }
 
+  public changeUserState(user: any): void {
+    this.setState({
+      user: user
+    });
+  }
+
   public render(): JSX.Element {
     return (
       <div className="Overlay">
         <div className="OverlayContent">
-          <OverlayUpper></OverlayUpper>
+          <OverlayUpper
+            onLogin={this.props.onLogin}
+            onLogout={this.props.onLogout}
+            user={this.state.user}
+          ></OverlayUpper>
           <div className="NullSpace"></div>
-          <OverlayUnder recentQueries={this.state.recentQueries}></OverlayUnder>
+          <OverlayUnder
+            recentQueries={this.state.recentQueries}
+            user={this.state.user}
+          ></OverlayUnder>
         </div>
       </div>
     );

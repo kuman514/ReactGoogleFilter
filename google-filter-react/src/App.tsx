@@ -10,6 +10,8 @@ import Range from './components/Range';
 import ThemeChanger from './components/ThemeChanger';
 import Overlay from './components/Overlay';
 
+import * as Firebase from './components/Firebase';
+
 function App() {
   let ovl: Overlay;
   let cat: Category;
@@ -18,6 +20,10 @@ function App() {
   let ecs: ExceptSite;
   let sfs: SafeSearch;
   let rng: Range;
+
+  let credential: any = null;
+  let token: any = null;
+  let user: any = null;
 
   const onSearch = (): void => {
     // get primary content
@@ -71,7 +77,35 @@ function App() {
         onSearch();
       }
     }}>
-      <Overlay ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}></Overlay>
+      <Overlay
+        ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}
+        onLogin={() => {
+          console.log('Logging in...');
+          Firebase.firebaseAppAuth.signInWithPopup(Firebase.firebaseAppGoogleLogin).then((result) => {
+            /** @type {firebase.auth.OAuthCredential} */
+            credential = result.credential;
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            token = credential.accessToken;
+            // The signed-in user info.
+            user = result.user;
+            console.log(credential, token, user);
+            ovl.changeUserState(user);
+          }).catch((error) => {
+            // An error happened.
+          });
+        }}
+        onLogout={() => {
+          console.log('Logging out...');
+          Firebase.firebaseAppAuth.signOut().then(() => {
+            // Sign-out successful.
+            console.log('Logout successful');
+            ovl.changeUserState(null);
+          }).catch((error) => {
+            // An error happened.
+          });
+        }}
+      >       
+      </Overlay>
       <Logo></Logo>
       <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
       <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>

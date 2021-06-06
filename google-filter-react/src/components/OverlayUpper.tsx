@@ -2,7 +2,9 @@ import React from 'react';
 import { Component } from 'react';
 
 interface OverlayUpperProps {
-
+  onLogin?: Function,
+  onLogout?: Function,
+  user?: any
 }
 
 interface OverlayUpperState {
@@ -27,7 +29,19 @@ class OverlayUpper extends Component<OverlayUpperProps, OverlayUpperState> {
     return (
       <div className="OverlayUpper">
         <div></div>
-        <button>로그인</button>
+        {
+          this.props.user
+          ? <button onClick={() => {
+              if (this.props.onLogout) {
+                this.props.onLogout();
+              }
+            }}>로그아웃</button>
+          : <button onClick={() => {
+              if (this.props.onLogin) {
+                this.props.onLogin();
+              }
+            }}>로그인</button>
+        }
         <button onClick={() => {
           this.setState({
             underfold: !(this.state.underfold)

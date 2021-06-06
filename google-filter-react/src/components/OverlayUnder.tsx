@@ -2,7 +2,8 @@ import React from 'react';
 import { Component } from 'react';
 
 interface OverlayUnderProps {
-  recentQueries: string[]
+  recentQueries: string[],
+  user?: any
 }
 
 interface OverlayUnderState {
