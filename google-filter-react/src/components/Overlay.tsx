@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import OverlayUpper from './OverlayUpper';
 import OverlayUnder from './OverlayUnder';
+import './Firebase';
 
 interface OverlayProps {
 
