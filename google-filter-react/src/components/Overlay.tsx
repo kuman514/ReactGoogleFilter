@@ -11,14 +11,17 @@ interface OverlayProps {
 
 interface OverlayState {
   recentQueries: string[],
-  user?: any
+  user?: any,
+  isLoading: boolean
 }
 
 class Overlay extends Component<OverlayProps, OverlayState> {
   constructor(props: OverlayProps) {
     super(props);
     this.state = {
-      recentQueries: []
+      recentQueries: [],
+      user: null,
+      isLoading: true
     };
   }
 
@@ -62,6 +65,12 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     this.refreshRecent();
   }
 
+  public loadingComplete(): void {
+    this.setState({
+      isLoading: false
+    });
+  }
+
   public render(): JSX.Element {
     return (
       <div className="Overlay">
@@ -70,8 +79,15 @@ class Overlay extends Component<OverlayProps, OverlayState> {
             onLogin={this.props.onLogin}
             onLogout={this.props.onLogout}
             user={this.state.user}
+
           ></OverlayUpper>
-          <div className="NullSpace"></div>
+          <div className="NullSpace">
+            {
+              this.state.isLoading
+              ? '로그인 중'
+              : ''
+            }
+          </div>
           <OverlayUnder
             recentQueries={this.state.recentQueries}
             user={this.state.user}

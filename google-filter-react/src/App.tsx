@@ -22,9 +22,14 @@ function App() {
   let rng: Range;
 
   Firebase.firebaseAppAuth.getRedirectResult().then((result) => {
+    console.log('Process complete');
     var user = result.user;
-    if (ovl) {
+    if (ovl && user) {
+      console.log('Login complete');
       ovl.changeUserState(user);
+    }
+    if (ovl) {
+      ovl.loadingComplete();
     }
   }).catch((error) => {
     console.log('Error in getting auth');
