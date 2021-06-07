@@ -38,15 +38,21 @@ function App() {
   const onSearch = (): void => {
     // get primary content
     let finalPrimary: string = '';
-    for (const item of pri.getContent()) {
-      finalPrimary += `${item} `;
+    if (pri) {
+      for (const item of pri.getContent()) {
+        finalPrimary += `${item} `;
+      }
     }
     // get strong content
     let finalStrong: string = '';
-    const strContent: string[] = str.getContent();
-    for (const item of strContent) {
-      finalStrong += `"${item}" `;
+    if (str) {
+      const strContent: string[] = str.getContent();
+      for (const item of strContent) {
+        finalStrong += `"${item}" `;
+      }
     }
+
+    // combine search queries
     const finalSearchQuery: string = `${finalPrimary}${finalStrong}`;
     if (finalSearchQuery === '') {
       return;
@@ -80,13 +86,15 @@ function App() {
     document.documentElement.setAttribute('color-theme', 'light');
   }
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSearch();
+    }
+  });
+
   return (
-    <div className="App" onKeyDown={(e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        onSearch();
-      }
-    }}>
+    <div className="App">
       <Overlay
         ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}
         onLogin={() => {
