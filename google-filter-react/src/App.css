@@ -130,6 +130,13 @@ button:hover {
   pointer-events: none;
 }
 
+.Loading {
+  background-color: var(--background);
+  color: var(--fontColor);
+  text-align: center;
+  pointer-events: visible;
+}
+
 .OverlayContent {
   width: 100%;
   height: 100%;

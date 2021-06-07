@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import OverlayUpper from './OverlayUpper';
 import OverlayUnder from './OverlayUnder';
+import LoadingOverlay from './LoadingOverlay';
 import * as Firebase from './Firebase';
 
 interface OverlayProps {
@@ -74,19 +75,18 @@ class Overlay extends Component<OverlayProps, OverlayState> {
   public render(): JSX.Element {
     return (
       <div className="Overlay">
+        {
+          this.state.isLoading
+          ? <LoadingOverlay></LoadingOverlay>
+          : ''
+        }
         <div className="OverlayContent">
           <OverlayUpper
             onLogin={this.props.onLogin}
             onLogout={this.props.onLogout}
             user={this.state.user}
-
           ></OverlayUpper>
           <div className="NullSpace">
-            {
-              this.state.isLoading
-              ? '로그인 중'
-              : ''
-            }
           </div>
           <OverlayUnder
             recentQueries={this.state.recentQueries}
