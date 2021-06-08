@@ -91,6 +91,18 @@ class Overlay extends Component<OverlayProps, OverlayState> {
           <OverlayUnder
             recentQueries={this.state.recentQueries}
             user={this.state.user}
+            onDelete={(index: number) => {
+              const newRecent: string[] = Array.from(this.state.recentQueries);
+              if (newRecent.length <= index) {
+                return;
+              }
+              newRecent.splice(index, 1);
+
+              Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).set(newRecent);
+              this.setState({
+                recentQueries: newRecent
+              });
+            }}
           ></OverlayUnder>
         </div>
       </div>
