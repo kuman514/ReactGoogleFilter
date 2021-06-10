@@ -7,7 +7,6 @@ import ExceptSite from './components/ExceptSite';
 import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
 import Range from './components/Range';
-import ThemeChanger from './components/ThemeChanger';
 import Overlay from './components/Overlay';
 
 import * as Firebase from './components/Firebase';
@@ -22,10 +21,10 @@ function App() {
   let rng: Range;
 
   Firebase.firebaseAppAuth.getRedirectResult().then((result) => {
-    console.log('Process complete');
+    console.log('Load complete');
     var user = result.user;
     if (ovl && user) {
-      console.log('Login complete');
+      console.log('Login successful');
       ovl.changeUserState(user);
     }
     if (ovl) {
@@ -46,8 +45,7 @@ function App() {
     // get strong content
     let finalStrong: string = '';
     if (str) {
-      const strContent: string[] = str.getContent();
-      for (const item of strContent) {
+      for (const item of str.getContent()) {
         finalStrong += `"${item}" `;
       }
     }
@@ -60,8 +58,7 @@ function App() {
 
     // get except site content
     let finalExcSite: string = '';
-    const ecsContent: string[] = ecs.getContent();
-    for (const item of ecsContent) {
+    for (const item of ecs.getContent()) {
       finalExcSite += `-site:${item} `;
     }
     // get safe search content
@@ -104,7 +101,6 @@ function App() {
         onLogout={() => {
           console.log('Logging out...');
           Firebase.firebaseAppAuth.signOut().then(() => {
-            // Sign-out successful.
             console.log('Logout successful');
             ovl.changeUserState(null);
           }).catch((error) => {
@@ -123,7 +119,6 @@ function App() {
         e.preventDefault();
         onSearch();
       }}>검색하기</button>
-      <ThemeChanger></ThemeChanger>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import ThemeChanger from './ThemeChanger';
 
 interface OverlayUpperProps {
   onLogin?: Function,
@@ -47,6 +48,7 @@ class OverlayUpper extends Component<OverlayUpperProps, OverlayUpperState> {
             underfold: !(this.state.underfold)
           });
         }}>최근 검색어</button>
+        <ThemeChanger></ThemeChanger>
       </div>
     );
   }
