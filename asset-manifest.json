@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ReactGoogleFilter/static/css/main.728747c7.chunk.css",
-    "main.js": "/ReactGoogleFilter/static/js/main.a3ffb14c.chunk.js",
-    "main.js.map": "/ReactGoogleFilter/static/js/main.a3ffb14c.chunk.js.map",
+    "main.js": "/ReactGoogleFilter/static/js/main.6b671cb3.chunk.js",
+    "main.js.map": "/ReactGoogleFilter/static/js/main.6b671cb3.chunk.js.map",
     "runtime-main.js": "/ReactGoogleFilter/static/js/runtime-main.bb0ddc98.js",
     "runtime-main.js.map": "/ReactGoogleFilter/static/js/runtime-main.bb0ddc98.js.map",
     "static/js/2.2bcebd77.chunk.js": "/ReactGoogleFilter/static/js/2.2bcebd77.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.bb0ddc98.js",
     "static/js/2.2bcebd77.chunk.js",
     "static/css/main.728747c7.chunk.css",
-    "static/js/main.a3ffb14c.chunk.js"
+    "static/js/main.6b671cb3.chunk.js"
   ]
 }
