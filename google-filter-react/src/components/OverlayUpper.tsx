@@ -5,7 +5,7 @@ import ThemeChanger from './ThemeChanger';
 interface OverlayUpperProps {
   onLogin?: Function,
   onLogout?: Function,
-  user?: any
+  user?: firebase.default.User
 }
 
 interface OverlayUpperState {

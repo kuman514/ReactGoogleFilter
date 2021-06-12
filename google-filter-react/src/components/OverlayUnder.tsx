@@ -3,7 +3,7 @@ import { Component } from 'react';
 
 interface OverlayUnderProps {
   recentQueries: string[],
-  user?: any,
+  user?: firebase.default.User,
   onDelete: Function
 }
 
