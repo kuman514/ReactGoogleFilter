@@ -21,7 +21,6 @@ function App() {
   let rng: Range;
 
   Firebase.firebaseAppAuth.getRedirectResult().then((result) => {
-    console.log('Load complete');
     var user = result.user;
     if (ovl && user) {
       console.log('Login successful');
