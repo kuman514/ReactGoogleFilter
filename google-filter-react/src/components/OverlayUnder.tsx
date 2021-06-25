@@ -3,7 +3,7 @@ import { Component } from 'react';
 
 interface OverlayUnderProps {
   recentQueries: string[],
-  user?: firebase.default.User,
+  user?: firebase.default.User | null,
   onDelete: Function
 }
 
@@ -17,8 +17,8 @@ class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
     };
   }
 
-  private convertContent(): JSX.Element {
-    if (!this.props.user || this.props.recentQueries.length === 0) {
+  private convertContent(recents: string[]): JSX.Element {
+    if (!this.props.user || recents.length === 0) {
       return (
         <div>
           {
@@ -31,14 +31,14 @@ class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
     }
 
     const finalContent: JSX.Element[] = [];
-    for (const index in this.props.recentQueries) {
+    for (const index in recents) {
       finalContent.push(
         <li key={`recent-${index}`}>
           <button onClick={() => {
             this.props.onDelete(index);
           }}>X</button>
-          <a href={`https://www.google.com/search?q=${this.props.recentQueries[index]}`} target="_blank" rel="noreferrer">
-            {this.props.recentQueries[index]}
+          <a href={`https://www.google.com/search?q=${recents[index]}`} target="_blank" rel="noreferrer">
+            {recents[index]}
           </a>
         </li>
       );
@@ -54,9 +54,9 @@ class OverlayUnder extends Component<OverlayUnderProps, OverlayUnderState> {
   public render(): JSX.Element {
     return (
       <div className="OverlayUnder">
-        <div className="OverlayTitle">최근 검색어</div>
+        <div className="OverlayTitle">{this.props.user ? `${this.props.user.displayName}의 ` : ''}최근 검색어</div>
         <div className="RecentQueries">
-          {this.convertContent()}
+          {this.convertContent(this.props.recentQueries)}
         </div>
       </div>
     );

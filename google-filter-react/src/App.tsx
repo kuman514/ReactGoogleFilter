@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+
 import Category from './components/Category'
 import Primary from './components/Primary';
 import Strong from './components/Strong';
@@ -9,42 +10,68 @@ import Logo from './components/Logo';
 import Range from './components/Range';
 import Overlay from './components/Overlay';
 
-import * as Firebase from './components/Firebase';
+import withFirebaseAuth, { WrappedComponentProps } from 'react-with-firebase-auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './configs/FirebaseConfig';
 
-function App() {
-  let ovl: Overlay;
-  let cat: Category;
-  let pri: Primary;
-  let str: Strong;
-  let ecs: ExceptSite;
-  let sfs: SafeSearch;
-  let rng: Range;
+// Initialize Firebase
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth: firebase.auth.Auth = firebaseApp.auth();
+const firebaseAppDBRef: firebase.database.Database = firebase.database();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider()
+};
 
-  Firebase.firebaseAppAuth.getRedirectResult().then((result) => {
-    var user = result.user;
-    if (ovl && user) {
-      console.log('Login successful');
-      ovl.changeUserState(user);
-    }
-    if (ovl) {
-      ovl.loadingComplete();
-    }
-  }).catch((error) => {
-    console.log('Error in getting auth');
-  });
+// Initialize theme based on OS preference
+const userPrefersDark: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const userPrefersLight : boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+if (userPrefersDark){
+  document.documentElement.setAttribute('color-theme', 'dark');
+} else if (userPrefersLight) {
+  document.documentElement.setAttribute('color-theme', 'light');
+}
 
-  const onSearch = (): void => {
+class App extends React.Component<object & WrappedComponentProps> {
+  private pri: Primary | null;
+  private str: Strong | null;
+  private ecs: ExceptSite | null;
+  private sfs: SafeSearch | null;
+  private rng: Range | null;
+  private cat: Category | null;
+  private ovl: Overlay | null;
+
+  constructor(props: object & WrappedComponentProps) {
+    super(props);
+    this.pri = null;
+    this.str = null;
+    this.ecs = null;
+    this.sfs = null;
+    this.rng = null;
+    this.cat = null;
+    this.ovl = null;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        this.onSearch();
+      }
+    });
+  }
+
+  onSearch = (): void => {
     // get primary content
     let finalPrimary: string = '';
-    if (pri) {
-      for (const item of pri.getContent()) {
+    if (this.pri) {
+      for (const item of this.pri.getContent()) {
         finalPrimary += `${item} `;
       }
     }
+
     // get strong content
     let finalStrong: string = '';
-    if (str) {
-      for (const item of str.getContent()) {
+    if (this.str) {
+      for (const item of this.str.getContent()) {
         finalStrong += `"${item}" `;
       }
     }
@@ -57,69 +84,87 @@ function App() {
 
     // get except site content
     let finalExcSite: string = '';
-    for (const item of ecs.getContent()) {
-      finalExcSite += `-site:${item} `;
+    if (this.ecs) {
+      for (const item of this.ecs.getContent()) {
+        finalExcSite += `-site:${item} `;
+      }
     }
+
     // get safe search content
-    let finalSafeSearch: string = sfs.getContent();
+    let finalSafeSearch: string = '';
+    if (this.sfs) {
+      finalSafeSearch = this.sfs.getContent();
+    }
+
     // get range content
-    let finalRange: string = rng.getContent();
+    let finalRange: string = '';
+    if (this.rng) {
+      finalRange = this.rng.getContent();
+    }
+
     // get category
-    let finalCategory: string = cat.getContent();
+    let finalCategory: string = '';
+    if (this.cat) {
+      finalCategory = this.cat.getContent();
+    }
     const finalParameters: string = `${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`;
 
     const finalQuery: string = `${finalSearchQuery}${finalParameters}`;
-    ovl.pushRecent(finalQuery);
+    if (this.ovl) {
+      this.ovl.pushRecent(finalQuery);
+    }
     window.open(`https://www.google.com/search?q=${finalQuery}`, '_blank');
   };
 
-  // Initialize theme based on OS preference
-  const userPrefersDark: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const userPrefersLight : boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-  if (userPrefersDark){
-    document.documentElement.setAttribute('color-theme', 'dark');
-  } else if (userPrefersLight) {
-    document.documentElement.setAttribute('color-theme', 'light');
+  public render(): JSX.Element {
+    const {
+      user,
+      signOut,
+      signInWithGoogle,
+    } = this.props;
+
+    return (
+      <div className="App">
+        <Overlay
+          user={user}
+          onLogin={signInWithGoogle}
+          onLogout={signOut}
+          dbRef={firebaseAppDBRef}
+          ref={(overlayComponent) => {this.ovl = overlayComponent as Overlay}}
+        />
+        <Logo/>
+        <Category
+          ref={(categoryComponent) => {this.cat = categoryComponent as Category}}
+        />
+        <Primary
+          ref={(primaryComponent) => {this.pri = primaryComponent as Primary}}
+        />
+        <Strong
+          ref={(strongComponent) => {this.str = strongComponent as Strong}}
+        />
+        <ExceptSite
+          ref={(exceptSiteComponent) => {this.ecs = exceptSiteComponent as ExceptSite}}
+        />
+        <SafeSearch
+          ref={(safeSearchComponent) => {this.sfs = safeSearchComponent as SafeSearch}}
+        />
+        <Range
+          ref={(rangeComponent) => {this.rng = rangeComponent as Range}}
+        />
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            this.onSearch();
+          }}
+        >
+          검색하기
+        </button>
+      </div>
+    );
   }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onSearch();
-    }
-  });
-
-  return (
-    <div className="App">
-      <Overlay
-        ref={(overlayComponent) => {ovl = overlayComponent as Overlay}}
-        onLogin={() => {
-          console.log('Logging in...');
-          Firebase.firebaseAppAuth.signInWithRedirect(Firebase.firebaseAppGoogleLogin);
-        }}
-        onLogout={() => {
-          console.log('Logging out...');
-          Firebase.firebaseAppAuth.signOut().then(() => {
-            console.log('Logout successful');
-            ovl.changeUserState(null);
-          }).catch((error) => {
-            console.log('Error in logging out');
-          });
-        }}
-      ></Overlay>
-      <Logo></Logo>
-      <Category ref={(categoryComponent) => {cat = categoryComponent as Category}}></Category>
-      <Primary ref={(primaryComponent) => {pri = primaryComponent as Primary}}></Primary>
-      <Strong ref={(strongComponent) => {str = strongComponent as Strong}}></Strong>
-      <ExceptSite ref={(exceptSiteComponent) => {ecs = exceptSiteComponent as ExceptSite}}></ExceptSite>
-      <SafeSearch ref={(safeSearchComponent) => {sfs = safeSearchComponent as SafeSearch}}></SafeSearch>
-      <Range ref={(rangeComponent) => {rng = rangeComponent as Range}}></Range>
-      <button onClick={(e) => {
-        e.preventDefault();
-        onSearch();
-      }}>검색하기</button>
-    </div>
-  );
 }
 
-export default App;
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth
+})(App);

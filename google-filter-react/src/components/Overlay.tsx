@@ -2,108 +2,79 @@ import React from 'react';
 import { Component } from 'react';
 import OverlayUpper from './OverlayUpper';
 import OverlayUnder from './OverlayUnder';
-import LoadingOverlay from './LoadingOverlay';
-import * as Firebase from './Firebase';
+
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 interface OverlayProps {
+  user?: firebase.User | null,
   onLogin?: Function,
-  onLogout?: Function
+  onLogout?: Function,
+  dbRef?: firebase.database.Database
 }
 
 interface OverlayState {
-  recentQueries: string[],
-  user?: any,
-  isLoading: boolean
+  recentQueries: string[]
 }
 
 class Overlay extends Component<OverlayProps, OverlayState> {
   constructor(props: OverlayProps) {
     super(props);
     this.state = {
-      recentQueries: [],
-      user: null,
-      isLoading: true
+      recentQueries: []
     };
   }
 
-  private refreshRecent(): void {
-    if (this.state.user) {
-      Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).get().then((snapshot) => {
-        if (snapshot.exists()) {
-          this.setState({
-            recentQueries: snapshot.val()
-          });
-        }
-      });
-    } else {
-      this.setState({
-        recentQueries: []
-      });
-    }
-  }
-
   public pushRecent(query: string): void {
-    if (!this.state.user) {
-      return;
+    if (this.props.user) {
+      const newRecent: string[] = Array.from(this.state.recentQueries);
+      if (newRecent.length >= 10) {
+        newRecent.pop();
+      }
+      newRecent.splice(0, 0, query);
+
+      if (this.props.dbRef) {
+        this.props.dbRef.ref(`/${this.props.user.uid}`).set(newRecent);
+      }
+
+      this.setState({
+        recentQueries: newRecent
+      });
     }
-    
-    const newRecent: string[] = Array.from(this.state.recentQueries);
-    if (newRecent.length >= 10) {
-      newRecent.pop();
-    }
-    newRecent.splice(0, 0, query);
-
-    Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).set(newRecent);
-    this.setState({
-      recentQueries: newRecent
-    });
-  }
-
-  public changeUserState(user: any): void {
-    this.setState({
-      user: user
-    });
-    this.refreshRecent();
-  }
-
-  public loadingComplete(): void {
-    this.setState({
-      isLoading: false
-    });
   }
 
   public render(): JSX.Element {
     return (
       <div className="Overlay">
-        {
-          this.state.isLoading
-          ? <LoadingOverlay></LoadingOverlay>
-          : ''
-        }
         <div className="OverlayContent">
           <OverlayUpper
             onLogin={this.props.onLogin}
             onLogout={this.props.onLogout}
-            user={this.state.user}
-          ></OverlayUpper>
+            user={this.props.user}
+          />
           <div className="NullSpace">
           </div>
           <OverlayUnder
             recentQueries={this.state.recentQueries}
-            user={this.state.user}
+            user={this.props.user}
             onDelete={(index: number) => {
-              const newRecent: string[] = Array.from(this.state.recentQueries);
-              if (newRecent.length <= index) {
-                return;
-              }
-              newRecent.splice(index, 1);
+              if (this.props.user) {
+                const newRecent: string[] = Array.from(this.state.recentQueries);
+                if (newRecent.length <= index) {
+                  return;
+                }
+                newRecent.splice(index, 1);
 
-              Firebase.firebaseAppDBRef.ref(`/${this.state.user.uid}`).set(newRecent);
-              this.setState({
-                recentQueries: newRecent
-              });
+                if (this.props.dbRef) {
+                  this.props.dbRef.ref(`/${this.props.user.uid}`).set(newRecent);
+                }
+                
+                this.setState({
+                  recentQueries: newRecent
+                });
+              }
             }}
-          ></OverlayUnder>
+          />
         </div>
       </div>
     );

@@ -12,7 +12,7 @@
 /google-filter-react/build
 
 # configs
-/google-filter-react/src/components/FirebaseConfig.tsx
+/google-filter-react/src/configs/FirebaseConfig.tsx
 
 # misc
 /google-filter-react/.DS_Store

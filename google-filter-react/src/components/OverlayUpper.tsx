@@ -5,7 +5,7 @@ import ThemeChanger from './ThemeChanger';
 interface OverlayUpperProps {
   onLogin?: Function,
   onLogout?: Function,
-  user?: firebase.default.User
+  user?: firebase.default.User | null
 }
 
 interface OverlayUpperState {
@@ -32,14 +32,14 @@ class OverlayUpper extends Component<OverlayUpperProps, OverlayUpperState> {
         <div></div>
         {
           this.props.user
-          ? <button onClick={() => {
+          ? <button onClick={(e) => {
               if (this.props.onLogout) {
-                this.props.onLogout();
+                this.props.onLogout(e);
               }
-            }}>로그아웃</button>
-          : <button onClick={() => {
+            }}>{this.props.user.displayName} 로그아웃</button>
+          : <button onClick={(e) => {
               if (this.props.onLogin) {
-                this.props.onLogin();
+                this.props.onLogin(e);
               }
             }}>로그인</button>
         }
