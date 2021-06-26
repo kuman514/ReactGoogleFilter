@@ -25,6 +25,20 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     };
   }
 
+  public initRecent(user: firebase.User | null): void {
+    if (user && this.props.dbRef) {
+      this.props.dbRef.ref(`/${user.uid}`).get().then((snapshot) => {
+        this.setState({
+          recentQueries: snapshot.val()
+        });
+      });
+    } else {
+      this.setState({
+        recentQueries: []
+      });
+    }
+  }
+
   public pushRecent(query: string): void {
     if (this.props.user) {
       const newRecent: string[] = Array.from(this.state.recentQueries);

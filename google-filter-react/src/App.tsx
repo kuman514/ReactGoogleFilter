@@ -57,6 +57,12 @@ class App extends React.Component<object & WrappedComponentProps> {
         this.onSearch();
       }
     });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (this.ovl) {
+        this.ovl.initRecent(user);
+      }
+    });
   }
 
   onSearch = (): void => {
