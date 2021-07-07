@@ -1,6 +1,7 @@
 # ReactGoogleFilter
 React + TypeScript를 이용하여, Google 검색에서 유용하게 쓰일 수 있는 검색 필터 옵션을 한 눈에 사용할 수 있도록 해주는 웹 앱입니다.   
-[앱 사용해보기](https://kuman514.github.io/ReactGoogleFilter/)
+[앱 사용해보기](https://kuman514.github.io/ReactGoogleFilter/)   
+[License](https://github.com/kuman514/ReactGoogleFilter/blob/main/NOTICE.md)
 
 # Option (옵션 설명)
 - 각 옵션(주요 검색어, 강조 검색어, 제외할 사이트)의 내용은 `,(콤마)`로 구분하여 여러 개를 입력할 수 있습니다.
