@@ -27,10 +27,16 @@ class Overlay extends Component<OverlayProps, OverlayState> {
 
   public initRecent(user: firebase.User | null): void {
     if (user && this.props.dbRef) {
-      this.props.dbRef.ref(`/${user.uid}`).get().then((snapshot) => {
-        this.setState({
-          recentQueries: snapshot.val()
-        });
+      this.props.dbRef.ref(`/recent/${user.uid}`).get().then((snapshot) => {
+        if (snapshot.val()) {
+          this.setState({
+            recentQueries: snapshot.val()
+          });
+        } else {
+          this.setState({
+            recentQueries: []
+          });
+        }
       });
     } else {
       this.setState({
@@ -48,7 +54,7 @@ class Overlay extends Component<OverlayProps, OverlayState> {
       newRecent.splice(0, 0, query);
 
       if (this.props.dbRef) {
-        this.props.dbRef.ref(`/${this.props.user.uid}`).set(newRecent);
+        this.props.dbRef.ref(`/recent/${this.props.user.uid}`).set(newRecent);
       }
 
       this.setState({

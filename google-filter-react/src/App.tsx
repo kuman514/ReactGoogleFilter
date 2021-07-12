@@ -25,7 +25,7 @@ const providers = {
 
 // Initialize theme based on OS preference
 const userPrefersDark: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-const userPrefersLight : boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+const userPrefersLight: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
 if (userPrefersDark){
   document.documentElement.setAttribute('color-theme', 'dark');
 } else if (userPrefersLight) {
