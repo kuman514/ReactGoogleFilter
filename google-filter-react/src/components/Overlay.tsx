@@ -25,6 +25,22 @@ class Overlay extends Component<OverlayProps, OverlayState> {
     };
   }
 
+  public initTheme(user: firebase.User | null): void {
+    if (user && this.props.dbRef) {
+      // If this user has not set the theme just register it
+      this.props.dbRef.ref(`/theme/${user.uid}`).get().then((snapshot) => {
+        if (snapshot.val()) {
+          document.documentElement.setAttribute('color-theme', snapshot.val());
+        } else {
+          const curTheme = document.documentElement.getAttribute('color-theme');
+          if (curTheme && this.props.dbRef) {
+            this.props.dbRef.ref(`/theme/${user.uid}`).set(curTheme);
+          }
+        }
+      });
+    }
+  }
+
   public initRecent(user: firebase.User | null): void {
     if (user && this.props.dbRef) {
       this.props.dbRef.ref(`/recent/${user.uid}`).get().then((snapshot) => {
@@ -71,6 +87,12 @@ class Overlay extends Component<OverlayProps, OverlayState> {
             onLogin={this.props.onLogin}
             onLogout={this.props.onLogout}
             user={this.props.user}
+            onThemeChange={() => {
+              const curTheme = document.documentElement.getAttribute('color-theme');
+              if (curTheme && this.props.dbRef && this.props.user) {
+                this.props.dbRef.ref(`/theme/${this.props.user.uid}`).set(curTheme);
+              }
+            }}
           />
           <div className="NullSpace">
           </div>

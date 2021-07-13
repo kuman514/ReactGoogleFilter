@@ -60,6 +60,7 @@ class App extends React.Component<object & WrappedComponentProps> {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (this.ovl) {
+        this.ovl.initTheme(user);
         this.ovl.initRecent(user);
       }
     });
