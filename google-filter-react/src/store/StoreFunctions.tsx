@@ -22,10 +22,24 @@ export function onSetStrong(state: StoreState, newStrong: string): StoreState {
   };
 }
 
+export function onSetExcept(state: StoreState, newExcept: string): StoreState {
+  return {
+    ...state,
+    except: newExcept
+  };
+}
+
 export function onSetSafeSearch(state: StoreState, newSafeSearchStatus: boolean): StoreState {
   return {
     ...state,
     safeSearch: newSafeSearchStatus
+  };
+}
+
+export function onSetRange(state: StoreState, newRange: string) {
+  return {
+    ...state,
+    range: newRange
   };
 }
 
