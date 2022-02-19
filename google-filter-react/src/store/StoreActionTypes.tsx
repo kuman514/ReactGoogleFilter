@@ -58,7 +58,7 @@ class SetUserAction implements Action {
 // CHANGERECORD
 class ChangeRecordAction implements Action {
   readonly type = 'CHANGERECORD';
-  constructor(public payload: string) {}
+  constructor(public payload: string[]) {}
 }
 
 // APPENDRECORD
@@ -73,7 +73,7 @@ class ChangeThemeAction implements Action {
   constructor(public payload: string) {}
 }
 
-export type StoreActions = 
+export type StoreAction = 
   | SetCategoryAction
   | SetPrimaryAction
   | SetStrongAction
