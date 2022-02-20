@@ -1,16 +1,8 @@
-import { useSelector } from 'react-redux';
-
-import { StoreState } from '../store/StoreState';
 import RangeDateSetter from './RangeDateSetter';
 
 function RangeDate(): JSX.Element {
-  const isHiddenSelector = (state: StoreState): boolean => {
-    return (state.range === '&tbs=cdr:1,');
-  };
-  const isHidden: boolean = useSelector(isHiddenSelector);
-
   return (
-    <div hidden={isHidden} className="RangeDate">
+    <div className="RangeDate">
       <RangeDateSetter
         role="start"
       />
