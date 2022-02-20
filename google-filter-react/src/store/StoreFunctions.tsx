@@ -65,6 +65,10 @@ export function onSetUser(state: StoreState, newUser: firebase.User | null | und
 }
 
 export function onChangeRecord(state: StoreState, changedRecord: string[]): StoreState {
+  if (!state.user) {
+    return state;
+  }
+
   return {
     ...state,
     record: Array.from(changedRecord)
@@ -72,8 +76,12 @@ export function onChangeRecord(state: StoreState, changedRecord: string[]): Stor
 }
 
 export function onAppendRecord(state: StoreState, newRecord: string): StoreState {
+  if (!state.user) {
+    return state;
+  }
+
   const changedRecord: string[] = Array.from(state.record);
-  changedRecord.push(newRecord);
+  changedRecord.splice(0, 0, newRecord);
 
   return {
     ...state,
