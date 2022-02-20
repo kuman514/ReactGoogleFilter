@@ -8,6 +8,7 @@ import {
   sendThemeToDB
 } from '../configs/firebase';
 import { setFold, setTheme } from '../configs/theme';
+import LoadingOverlay from './LoadingOverlay';
 
 /*
 interface OverlayUpperProps {
@@ -28,6 +29,7 @@ function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
     user,
     signOut,
     signInWithGoogle,
+    loading
   } = props;
 
   const [status, setStatus] = useState({
@@ -43,6 +45,12 @@ function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
   */
   
   const dispatch = useDispatch();
+
+  if (loading) {
+    return (
+      <LoadingOverlay />
+    );
+  }
 
   return (
     <div className="OverlayUpper">
