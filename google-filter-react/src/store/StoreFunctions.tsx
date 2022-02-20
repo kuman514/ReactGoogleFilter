@@ -57,7 +57,7 @@ export function onSetDateRangeEnd(state: StoreState, newDateRangeEnd: Date): Sto
   };
 }
 
-export function onSetUser(state: StoreState, newUser: firebase.User | null): StoreState {
+export function onSetUser(state: StoreState, newUser: firebase.User | null | undefined): StoreState {
   return {
     ...state,
     user: newUser

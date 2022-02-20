@@ -10,7 +10,7 @@ export interface StoreState {
   range: string,
   dateRangeStart: Date,
   dateRangeEnd: Date,
-  user: firebase.User | null,
+  user: firebase.User | null | undefined,
   record: string[]
   theme: string
 };

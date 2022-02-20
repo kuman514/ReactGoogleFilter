@@ -52,7 +52,7 @@ class SetDateRangeEndAction implements Action {
 // SETUSER
 class SetUserAction implements Action {
   readonly type = 'SETUSER';
-  constructor(public payload: firebase.User | null) {}
+  constructor(public payload: firebase.User | null | undefined) {}
 }
 
 // CHANGERECORD
