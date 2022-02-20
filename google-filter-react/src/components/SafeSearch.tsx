@@ -1,6 +1,6 @@
-import React from 'react';
-import { Component } from 'react';
+import { useDispatch } from 'react-redux';
 
+/*
 interface SafeSearchProps {
 
 }
@@ -8,35 +8,22 @@ interface SafeSearchProps {
 interface SafeSearchState {
   active: boolean
 }
+*/
 
-class SafeSearch extends Component<SafeSearchProps, SafeSearchState> {
-  constructor(props: SafeSearchProps) {
-    super(props);
-    this.state = {
-      active: false
-    };
-  }
+function SafeSearch(): JSX.Element {
+  const dispatch = useDispatch();
 
-  getContent = (): string => {
-    if (this.state.active) {
-      return '&safe=active';
-    } else {
-      return '';
-    }
-  }
-
-  render(): JSX.Element {
-    return (
-      <div className="SafeSearch">
-        <input type="checkbox" name="safesearch" id="safesearch" onChange={(e) => {
-          this.setState({
-            active: e.target.checked
-          });
-        }}/>
-        <h2>세이프서치 활성화</h2>
-      </div>
-    );
-  }
+  return (
+    <div className="SafeSearch">
+      <input type="checkbox" name="safesearch" id="safesearch" onChange={(e) => {
+        dispatch({
+          type: 'SETSAFESEARCH',
+          payload: e.target.checked
+        });
+      }}/>
+      <h2>세이프서치 활성화</h2>
+    </div>
+  );
 }
 
 export default SafeSearch;
