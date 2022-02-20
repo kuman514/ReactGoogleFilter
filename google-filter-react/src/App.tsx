@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
+import { useDispatch } from 'react-redux';
 
+import './App.css';
 import Category from './components/Category'
 import Primary from './components/Primary';
 import Strong from './components/Strong';
@@ -9,169 +9,177 @@ import SafeSearch from './components/SafeSearch';
 import Logo from './components/Logo';
 import Range from './components/Range';
 import Overlay from './components/Overlay';
+import Theme from './components/Theme';
 
+/*
 import withFirebaseAuth, { WrappedComponentProps } from 'react-with-firebase-auth';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import firebaseConfig from './configs/FirebaseConfig';
+import {
+  firebaseAppAuth,
+  //firebaseAppDBRef,
+  providers
+} from './configs/firebase';
+*/
 
-// Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseAppAuth: firebase.auth.Auth = firebaseApp.auth();
-const firebaseAppDBRef: firebase.database.Database = firebase.database();
-const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider()
-};
+import { store } from './store/Store';
+import { StoreState } from './store/StoreState';
 
-// Initialize theme based on OS preference
-const userPrefersDark: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-const userPrefersLight: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-if (userPrefersDark){
-  document.documentElement.setAttribute('color-theme', 'dark');
-} else if (userPrefersLight) {
-  document.documentElement.setAttribute('color-theme', 'light');
-}
+import { sendRecordsToDB } from './configs/firebase';
 
-class App extends React.Component<object & WrappedComponentProps> {
-  private pri: Primary | null;
-  private str: Strong | null;
-  private ecs: ExceptSite | null;
-  private sfs: SafeSearch | null;
-  private rng: Range | null;
-  private cat: Category | null;
-  private ovl: Overlay | null;
+//function App(props: object & WrappedComponentProps): JSX.Element {
+function App(): JSX.Element {
+  /*
+  const {
+    signOut,
+    signInWithGoogle,
+    loading
+  } = props;
+  */
 
-  constructor(props: object & WrappedComponentProps) {
-    super(props);
-    this.pri = null;
-    this.str = null;
-    this.ecs = null;
-    this.sfs = null;
-    this.rng = null;
-    this.cat = null;
-    this.ovl = null;
+  const dispatch = useDispatch();
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        this.onSearch();
-      }
-    });
+  const formSearchDate = (date: Date): string => {
+    const today: string[] = String(date).split(' ');
+    let month = '';
+    switch (today[1]) {
+      case 'Jan':
+        month = '1';
+        break;
+      case 'Feb':
+        month = '2';
+        break;
+      case 'Mar':
+        month = '3';
+        break;
+      case 'Apr':
+        month = '4';
+        break;
+      case 'May':
+        month = '5';
+        break;
+      case 'Jun':
+        month = '6';
+        break;
+      case 'Jul':
+        month = '7';
+        break;
+      case 'Aug':
+        month = '8';
+        break;
+      case 'Sep':
+        month = '9';
+        break;
+      case 'Oct':
+        month = '10';
+        break;
+      case 'Nov':
+        month = '11';
+        break;
+      case 'Dec':
+        month = '12';
+        break;
+    }
+    const dateForm: string = `${month}/${today[2]}/${today[3]}`;
+    return dateForm;
+  };
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (this.ovl) {
-        this.ovl.initTheme(user);
-        this.ovl.initRecent(user);
-      }
-    });
-  }
+  const onSearch = (): void => {
+    const state: StoreState = store.getState();
 
-  onSearch = (): void => {
-    // get primary content
+    // Get primary content
+    const primaries: string[] = state.primary.split(',').map((item) => {
+      return item.trim();
+    }).filter((item) => (item !== ''));
+
     let finalPrimary: string = '';
-    if (this.pri) {
-      for (const item of this.pri.getContent()) {
-        finalPrimary += `${item} `;
-      }
-    }
+    primaries.forEach((item) => {
+      finalPrimary += `${item} `;
+    });
 
-    // get strong content
+    // Get strong content
+    const strongs: string[] = state.strong.split(',').map((item) => {
+      return item.trim();
+    }).filter((item) => (item !== ''));
+
     let finalStrong: string = '';
-    if (this.str) {
-      for (const item of this.str.getContent()) {
-        finalStrong += `"${item}" `;
-      }
-    }
+    strongs.forEach((item) => {
+      finalStrong += `"${item}" `;
+    });
 
-    // combine search queries
+    // Combine search queries
     const finalSearchQuery: string = `${finalPrimary}${finalStrong}`;
     if (finalSearchQuery === '') {
+      // If no search query, abort searching
       return;
     }
 
-    // get except site content
-    let finalExcSite: string = '';
-    if (this.ecs) {
-      for (const item of this.ecs.getContent()) {
-        finalExcSite += `-site:${item} `;
-      }
-    }
+    // Get except sites
+    const excepts: string[] = state.except.split(',').map((item) => {
+      return item.trim();
+    }).filter((item) => (item !== ''));
 
-    // get safe search content
-    let finalSafeSearch: string = '';
-    if (this.sfs) {
-      finalSafeSearch = this.sfs.getContent();
-    }
+    let finalExcept: string = '';
+    excepts.forEach((item) => {
+      finalExcept += `-site:${item} `;
+    });
 
-    // get range content
-    let finalRange: string = '';
-    if (this.rng) {
-      finalRange = this.rng.getContent();
-    }
+    // Get SafeSearch content
+    const finalSafeSearch: string = (state.safeSearch ? '&safe=active' : '');
 
-    // get category
-    let finalCategory: string = '';
-    if (this.cat) {
-      finalCategory = this.cat.getContent();
-    }
-    const finalParameters: string = `${finalExcSite}${finalSafeSearch}${finalRange}${finalCategory}`;
+    // Get range content
+    const startDateForm: string = formSearchDate(state.dateRangeStart);
+    const endDateForm: string = formSearchDate(state.dateRangeEnd);
+    const finalRange: string = ((state.range === '&tbs=cdr:1,') ? (
+      state.range + `cd_min:${startDateForm},cd_max:${endDateForm}`
+    ) : (state.range));
 
-    const finalQuery: string = `${finalSearchQuery}${finalParameters}`;
-    if (this.ovl) {
-      this.ovl.pushRecent(finalQuery);
-    }
+    // Get category
+    const finalCategory: string = state.category;
+
+    // Combine optional parameters
+    const finalOptionalParameters: string = `${finalExcept}${finalSafeSearch}${finalRange}${finalCategory}`;
+
+    // Combine the final query
+    const finalQuery: string = `${finalSearchQuery}${finalOptionalParameters}`;
+
+    // Open
     window.open(`https://www.google.com/search?q=${finalQuery}`, '_blank');
+
+    // TODO: Implement pushing the query to recent record
+    dispatch({
+      type: 'APPENDRECORD',
+      payload: finalQuery
+    });
+    sendRecordsToDB(store.getState().record);
   };
 
-  public render(): JSX.Element {
-    const {
-      user,
-      signOut,
-      signInWithGoogle,
-    } = this.props;
-
-    return (
-      <div className="App">
-        <Overlay
-          user={user}
-          onLogin={signInWithGoogle}
-          onLogout={signOut}
-          dbRef={firebaseAppDBRef}
-          ref={(overlayComponent) => {this.ovl = overlayComponent as Overlay}}
-        />
-        <Logo/>
-        <Category
-          ref={(categoryComponent) => {this.cat = categoryComponent as Category}}
-        />
-        <Primary
-          ref={(primaryComponent) => {this.pri = primaryComponent as Primary}}
-        />
-        <Strong
-          ref={(strongComponent) => {this.str = strongComponent as Strong}}
-        />
-        <ExceptSite
-          ref={(exceptSiteComponent) => {this.ecs = exceptSiteComponent as ExceptSite}}
-        />
-        <SafeSearch
-          ref={(safeSearchComponent) => {this.sfs = safeSearchComponent as SafeSearch}}
-        />
-        <Range
-          ref={(rangeComponent) => {this.rng = rangeComponent as Range}}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            this.onSearch();
-          }}
-        >
-          검색하기
-        </button>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <Overlay />
+      <Logo />
+      <Category />
+      <Primary />
+      <Strong />
+      <ExceptSite />
+      <SafeSearch />
+      <Range />
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          onSearch();
+        }}
+      >
+        검색하기
+      </button>
+      <Theme />
+    </div>
+  );
 }
 
+export default App;
+
+/*
 export default withFirebaseAuth({
   providers,
   firebaseAppAuth
 })(App);
+*/
