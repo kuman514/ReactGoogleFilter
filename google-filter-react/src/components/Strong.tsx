@@ -20,7 +20,7 @@ function Strong(): JSX.Element {
       </div>
       <input type="text" name="strong" id="strong" placeholder="콤마(,)로 구분하여 여러개 입력 가능." onChange={(e) => {
         e.preventDefault();
-        console.log(e.target.value);
+        //console.log(e.target.value);
         dispatch({
           type: 'SETSTRONG',
           payload: e.target.value

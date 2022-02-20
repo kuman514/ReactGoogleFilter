@@ -20,7 +20,7 @@ function Primary(): JSX.Element {
       </div>
       <input type="text" name="primary" id="primary" placeholder="콤마(,)로 구분하여 여러개 입력 가능." onChange={(e) => {
         e.preventDefault();
-        console.log(e.target.value);
+        //console.log(e.target.value);
         dispatch({
           type: 'SETPRIMARY',
           payload: e.target.value
