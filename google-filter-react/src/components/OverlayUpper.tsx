@@ -1,6 +1,15 @@
-import React from 'react';
-import { Component } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import withFirebaseAuth, { WrappedComponentProps } from 'react-with-firebase-auth';
 
+import {
+  firebaseAppAuth,
+  providers,
+  sendThemeToDB
+} from '../configs/firebase';
+import { setFold, setTheme } from '../configs/theme';
+
+/*
 interface OverlayUpperProps {
   onLogin?: Function,
   onLogout?: Function,
@@ -11,62 +20,94 @@ interface OverlayUpperProps {
 interface OverlayUpperState {
   underfold: boolean
 }
+*/
 
-class OverlayUpper extends Component<OverlayUpperProps, OverlayUpperState> {
-  constructor(props: OverlayUpperProps) {
-    super(props);
-    this.state = {
-      underfold: true
-    };
-  }
+//function OverlayUpper(): JSX.Element {
+function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
+  const {
+    user,
+    signOut,
+    signInWithGoogle,
+  } = props;
 
-  public render(): JSX.Element {
-    let underfoldAttr: string = 'unfold';
-    if (this.state.underfold) {
-      underfoldAttr = 'fold';
-    }
-    document.documentElement.setAttribute('under-overlay-fold', underfoldAttr);
+  const [status, setStatus] = useState({
+    underfold: true
+  });
+  setFold(status.underfold);
 
-    return (
-      <div className="OverlayUpper">
-        <div></div>
-        {
-          this.props.user
-          ? <button onClick={(e) => {
-              if (this.props.onLogout) {
-                this.props.onLogout(e);
-              }
-            }}>{this.props.user.displayName} 로그아웃</button>
-          : <button onClick={(e) => {
-              if (this.props.onLogin) {
-                this.props.onLogin(e);
-              }
-            }}>로그인</button>
-        }
-        <button onClick={() => {
-          this.setState({
-            underfold: !(this.state.underfold)
+  /*
+  const userSelector = (state: StoreState): firebase.User | null | undefined => {
+    return state.user;
+  };
+  const user: firebase.User | null | undefined = useSelector(userSelector);
+  */
+  
+  const dispatch = useDispatch();
+
+  return (
+    <div className="OverlayUpper">
+      <div></div>
+      {
+        user ? (
+          <button
+            onClick={() => {
+              signOut();
+            }}
+          >
+            { user.displayName } 로그아웃
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              signInWithGoogle();
+            }}
+          >
+            로그인
+          </button>
+        )
+      }
+      <button 
+        onClick={() => {
+          setStatus({
+            underfold: !(status.underfold)
           });
-        }}>최근 검색어</button>
-        <button className="ThemeChanger" onClick={() => {
+        }}
+      >
+        최근 검색어
+      </button>
+      <button
+        className="ThemeChanger"
+        onClick={() => {
           const curTheme: string | null = document.documentElement.getAttribute('color-theme');
           switch (curTheme) {
             case 'dark':
-              document.documentElement.setAttribute('color-theme', 'light');
+              setTheme('light');
+              dispatch({
+                type: 'CHANGETHEME',
+                payload: 'light'
+              });
+              sendThemeToDB('light');
               break;
             case 'light':
-              document.documentElement.setAttribute('color-theme', 'dark');
+              setTheme('dark');
+              dispatch({
+                type: 'CHANGETHEME',
+                payload: 'dark'
+              });
+              sendThemeToDB('dark');
               break;
           }
-          if (this.props.onThemeChange) {
-            this.props.onThemeChange();
-          }
-        }}>
-          테마 바꾸기
-        </button>
-      </div>
-    );
-  }
+        }}
+      >
+        테마 바꾸기
+      </button>
+    </div>
+  );
 }
 
-export default OverlayUpper;
+//export default OverlayUpper;
+
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth
+})(OverlayUpper);
