@@ -54,7 +54,6 @@ function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
 
   return (
     <div className="OverlayUpper">
-      <div></div>
       {
         user ? (
           <button

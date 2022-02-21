@@ -17,8 +17,6 @@ function Overlay(): JSX.Element {
     <div className="Overlay">
       <div className="OverlayContent">
         <OverlayUpper />
-        <div className="NullSpace">
-        </div>
         <OverlayUnder />
       </div>
     </div>

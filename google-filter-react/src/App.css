@@ -10,10 +10,12 @@
 
 :root[under-overlay-fold='fold'] {
   --under-overlay-height: 0;
+  --display-under-overlay: none;
 }
 
 :root[under-overlay-fold='unfold'] {
-  --under-overlay-height: 400px;
+  --under-overlay-height: 1fr;
+  --display-under-overlay: block;
 }
 
 * {
@@ -64,6 +66,7 @@
 }
 
 h2 {
+  font-size: calc(10px + 1vmin);
   display: inline;
   margin: 10px;
   margin-left: 6px;
@@ -94,7 +97,8 @@ input[type="text"]:focus {
 
 button {
   all: unset;
-  padding: 9px;
+  font-size: calc(10px + 1vmin);
+  padding: 5px;
   padding-left: 15px;
   padding-right: 15px;
   background-color: rgb(145, 204, 255);
@@ -143,7 +147,7 @@ button:hover {
   background-color: transparent;
   margin: 0;
   display: grid;
-  grid-template-rows: 70px 1fr var(--under-overlay-height);
+  grid-template-rows: 5vh 1fr;
 }
 
 .OverlayContent > * {
@@ -170,6 +174,16 @@ button:hover {
   margin: 5px;
   background-color: inherit;
   color: black;
+}
+
+.OverlayUpper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.OverlayUnder {
+  display: var(--display-under-overlay);
 }
 
 .RecentQueries {
