@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ReactGoogleFilter/static/css/main.84ce8d41.chunk.css",
+    "main.css": "/ReactGoogleFilter/static/css/main.61c84d59.chunk.css",
     "main.js": "/ReactGoogleFilter/static/js/main.050782af.chunk.js",
     "main.js.map": "/ReactGoogleFilter/static/js/main.050782af.chunk.js.map",
     "runtime-main.js": "/ReactGoogleFilter/static/js/runtime-main.0217ad9e.js",
@@ -10,13 +10,13 @@
     "static/js/3.3bcacdce.chunk.js": "/ReactGoogleFilter/static/js/3.3bcacdce.chunk.js",
     "static/js/3.3bcacdce.chunk.js.map": "/ReactGoogleFilter/static/js/3.3bcacdce.chunk.js.map",
     "index.html": "/ReactGoogleFilter/index.html",
-    "static/css/main.84ce8d41.chunk.css.map": "/ReactGoogleFilter/static/css/main.84ce8d41.chunk.css.map",
+    "static/css/main.61c84d59.chunk.css.map": "/ReactGoogleFilter/static/css/main.61c84d59.chunk.css.map",
     "static/js/2.29951bcd.chunk.js.LICENSE.txt": "/ReactGoogleFilter/static/js/2.29951bcd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0217ad9e.js",
     "static/js/2.29951bcd.chunk.js",
-    "static/css/main.84ce8d41.chunk.css",
+    "static/css/main.61c84d59.chunk.css",
     "static/js/main.050782af.chunk.js"
   ]
 }
