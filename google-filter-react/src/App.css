@@ -146,8 +146,9 @@ button:hover {
   height: 100%;
   background-color: transparent;
   margin: 0;
-  display: grid;
-  grid-template-rows: 5vh 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .OverlayContent > * {
@@ -178,7 +179,7 @@ button:hover {
 
 .OverlayUpper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
