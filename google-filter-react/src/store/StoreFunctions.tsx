@@ -95,3 +95,10 @@ export function onChangeTheme(state: StoreState, changedTheme: string): StoreSta
     theme: changedTheme
   };
 }
+
+export function onOpenOrCloseRecent(state: StoreState, isOpenRecent: boolean): StoreState {
+  return {
+    ...state,
+    recentFold: isOpenRecent
+  };
+}

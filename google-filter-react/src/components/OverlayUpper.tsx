@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import withFirebaseAuth, { WrappedComponentProps } from 'react-with-firebase-auth';
 
 import {
@@ -7,7 +9,8 @@ import {
   providers,
   sendThemeToDB
 } from '../configs/firebase';
-import { setFold, setTheme } from '../configs/theme';
+import { setTheme } from '../configs/theme';
+import { StoreState } from '../store/StoreState';
 import LoadingOverlay from './LoadingOverlay';
 
 /*
@@ -32,17 +35,17 @@ function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
     loading
   } = props;
 
-  const [status, setStatus] = useState({
-    underfold: true
-  });
-  setFold(status.underfold);
-
   /*
   const userSelector = (state: StoreState): firebase.User | null | undefined => {
     return state.user;
   };
   const user: firebase.User | null | undefined = useSelector(userSelector);
   */
+
+  const foldSelector = (state: StoreState): boolean => {
+    return state.recentFold;
+  };
+  const fold: boolean = useSelector(foldSelector);
   
   const dispatch = useDispatch();
 
@@ -75,8 +78,9 @@ function OverlayUpper(props: object & WrappedComponentProps): JSX.Element {
       }
       <button 
         onClick={() => {
-          setStatus({
-            underfold: !(status.underfold)
+          dispatch({
+            type: 'OPENORCLOSERECENT',
+            payload: !fold
           });
         }}
       >

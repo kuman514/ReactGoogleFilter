@@ -73,6 +73,12 @@ class ChangeThemeAction implements Action {
   constructor(public payload: string) {}
 }
 
+// OPENORCLOSERECENT
+class OpenOrCloseRecentAction implements Action {
+  readonly type = 'OPENORCLOSERECENT';
+  constructor(public payload: boolean) {}
+}
+
 export type StoreAction = 
   | SetCategoryAction
   | SetPrimaryAction
@@ -85,4 +91,5 @@ export type StoreAction =
   | SetUserAction
   | ChangeRecordAction
   | AppendRecordAction
-  | ChangeThemeAction;
+  | ChangeThemeAction
+  | OpenOrCloseRecentAction;

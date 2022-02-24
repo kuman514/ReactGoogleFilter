@@ -12,7 +12,8 @@ export interface StoreState {
   dateRangeEnd: Date,
   user: firebase.User | null | undefined,
   record: string[]
-  theme: string
+  theme: string,
+  recentFold: boolean
 };
 
 export const initState: StoreState = {
@@ -27,4 +28,5 @@ export const initState: StoreState = {
   user: null,
   record: Array<string>(),
   theme: userPrefersDark ? 'dark' : 'light',
+  recentFold: true
 };

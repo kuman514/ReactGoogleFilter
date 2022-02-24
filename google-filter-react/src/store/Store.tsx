@@ -14,7 +14,8 @@ import {
   onSetUser,
   onChangeRecord,
   onAppendRecord,
-  onChangeTheme
+  onChangeTheme,
+  onOpenOrCloseRecent
 } from './StoreFunctions';
 
 export const store = createStore((state: StoreState = initState, action: StoreAction): StoreState => {
@@ -43,6 +44,8 @@ export const store = createStore((state: StoreState = initState, action: StoreAc
       return onAppendRecord(state, action.payload);
     case 'CHANGETHEME':
       return onChangeTheme(state, action.payload);
+    case 'OPENORCLOSERECENT':
+      return onOpenOrCloseRecent(state, action.payload);
     default:
       return state;
   }

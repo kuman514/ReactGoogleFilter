@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { setTheme } from '../configs/theme';
+import { setFold, setTheme } from '../configs/theme';
 import { StoreState } from '../store/StoreState';
 
 function Theme(): null {
@@ -8,7 +8,13 @@ function Theme(): null {
   };
   const theme: string = useSelector(themeSelector);
 
+  const foldSelector = (state: StoreState): boolean => {
+    return state.recentFold;
+  };
+  const fold: boolean = useSelector(foldSelector);
+
   setTheme(theme);
+  setFold(fold);
 
   return null;
 }
