@@ -1,6 +1,5 @@
 # ReactGoogleFilter
-React + TypeScript를 이용하여, Google 검색에서 유용하게 쓰일 수 있는 검색 필터 옵션을 한 눈에 사용할 수 있도록 해주는 웹 앱입니다.   
-[앱 사용해보기](https://kuman514.github.io/ReactGoogleFilter/)   
+React + TypeScript를 이용하여, Google 검색에서 유용하게 쓰일 수 있는 검색 필터 옵션을 한 눈에 사용할 수 있도록 해주는 웹 앱입니다. 현재 운영이 종료되어, 더 이상 사용할 수 없습니다.
 [라이센스 정보 보기](https://github.com/kuman514/ReactGoogleFilter/blob/main/LICENSE.md)
 
 # Option (옵션 설명)
